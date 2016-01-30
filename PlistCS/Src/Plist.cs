@@ -130,8 +130,7 @@ namespace PlistCS
                 using (var xmlWriter = XmlWriter.Create(ms, xmlWriterSettings))
                 {
                     xmlWriter.WriteStartDocument(); 
-                    //xmlWriter.WriteComment("DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" " + "\"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"");
-                    xmlWriter.WriteDocType("plist", "-//Apple Computer//DTD PLIST 1.0//EN", "http://www.apple.com/DTDs/PropertyList-1.0.dtd", null);
+                    xmlWriter.WriteDocType("plist", "-//Apple//DTD PLIST 1.0//EN", "http://www.apple.com/DTDs/PropertyList-1.0.dtd", null);
                     xmlWriter.WriteStartElement("plist");
                     xmlWriter.WriteAttributeString("version", "1.0");
                     compose(value, xmlWriter);
@@ -381,8 +380,8 @@ namespace PlistCS
             else if (value is DateTime)
             {
                 var time = (DateTime)value;
-                var theString = XmlConvert.ToString(time, XmlDateTimeSerializationMode.Utc);
-                writer.WriteElementString("date", theString);//, "yyyy-MM-ddTHH:mm:ssZ"));
+                var theString = time.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
+                writer.WriteElementString("date", theString);
             }
             else if (value is bool)
             {
